@@ -1,41 +1,66 @@
 import random
+print ("""This is a number guessing game. U have to guess the correct number I have chosen.
+       You'll get total of 5 chances to guess the number. 
+       If u can guess the number within 5 chances, then congrats but if u couldn't, u lose.""")
 
-print('This is a number guessing game. \nYou have to guess the number that I guessed. \nYou will have a total number of 10 chances to guess the number. \nYou can input the lower and the upper limit. \nThe difference between the lower and the upper limit must be greater than 20.')
+chances = 5
 
 while True:
-    try:
-        low= int(input('Enter the lower limit: '))
-        high= int(input('Enter the higher limit: '))
-        if high < low:
-            print("The upper limit is smaller than the higher limit.")
-            continue
-        elif high - low < 20:
-            print ('The differnce between higher and the lower limit is less than 20. \nEnter again.')
-            continue
-        break
-    except ValueError:
-        print('This is a number guessing game. Not word or symbol guessing game!! ヽ(ｏ`皿′ｏ)ﾉ')
+    while True:
+        try:  #to check the user input
+            low = int(input("Write the lower limit of the range: "))
+            high = int(input("Write the higher limit of the range: "))
 
+            if high < low:  #checks if the limit is inputed correctly. it only checks after the user ahs successfully inputed the correct value.
+                print ("The higher limit is less than the lower limit. Try again.")
+                continue
+            elif high - low < 20:
+                print ("The difference between the higher and the lower limit is less than 20. Try again.")
+                continue
+            else:
+                break
 
+        except Exception:
+            print ("The input isn't a number. Try again.")
 
-number= random.randint(low, high)
-print('I have chosen a number.')
+    comp = random.randint(low, high)
 
-t= 5
-for i in range(t):
-    guess= int(input('Enter your guess: '))
-    if guess == number:
-        print('Wow!! You guessed the number!! Congratulations!!')
-        break
-    elif guess - low < 0 or high - guess < 0:
-        print ('Are u dumb? Look at your number. (>_<)')
-    elif guess < number and number - guess <= 5:
-        print ('The number is little low. \nTry again.')
-    elif guess < number and number - guess > 5:
-        print ('The number is too low.')
-    elif guess > number and number - guess >= 5:
-        print ('The number is a little high. Try again.')
-    elif guess > number and number - guess > 5:
-        print ('The number is too high.')  
+    for rounds in range(chances):
+        while True:
+            try: #checks if the user has inputed a logical input
+                user  = int(input("Enter your guess: "))
+                if user > high or user < low: #checks the range of the input
+                    print ("Write your guess within the limit.")
+                    continue
+                else:
+                    break
+            except Exception:
+                print ("Seriously? Just look what u wrote. Try again.")
+
+        if user == comp:
+            print ("Great job! u got it.")
+            if rounds == 0:
+                print ("Incredible!! U guessed it in very first try!")
+                break
+            else:
+                print ("You guessed the number in", rounds+1, "rounds.")
+                break
+        elif abs(user - comp)<= 2:
+            print ("U r almost there.")
+        elif abs (user - comp) <=5:
+            print ("U r very close.")
+        else:
+            print("Nice try.") 
+
+    else:
+        print (f'''You have used all of your chances. 
+            The correct number was {comp}''')
         
-print ("You have exhausted all of your chances and still couldn't find the number. You lost. \nThe Correct number is", number)
+    while True:
+        again= input ("Do u want to play again? Types yes if u do and no if u don't. ").lower()
+        if again == 'yes':
+            break
+        elif again == 'no':
+            exit()
+        else:
+            print ("Type yes or no.")
