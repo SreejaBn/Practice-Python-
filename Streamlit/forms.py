@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime
+
+min= datetime(1990, 2, 1)
+max= datetime.now()
 
 st.title ("Streamlit form")
 
@@ -8,7 +12,7 @@ with st.form(key= "sample_form"):
     name= st.text_input("Type here")
 
     st.subheader("Date and Time inputs")
-    date= st.date_input("Date")
+    date= st.date_input("Date", max_value= max, min_value= min)
     time= st.time_input("Time")
 
     st.subheader("Selecters")
