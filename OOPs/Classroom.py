@@ -34,17 +34,41 @@ class Classroom:
                 top_student= s
             else:
                 return top_student
+    
+    def remove_failing_students(self, passing_score):
+        self.passing_score= passing_score
+
+        if not self.students:
+            return 0
+        fail= 0
+        pass_students= []
+        for s in self.students:
+            if (s.score < passing_score):
+                print(f"Removing: {s.name}")
+                fail +=1
+            else:
+                pass_students.append(s)
+
+        self.students= pass_students
+        print(f"Cleanup finished. {fail} students removed.")
         
-
+# 1. Create Students
 s1 = Student("Alice", 90)
-s2 = Student("Bob", 80)
+s2 = Student("Bob", 40)
 s3 = Student("Charlie", 98)
+s4 = Student("David", 30)
 
+# 2. Setup Classroom
 my_class = Classroom("Python 101")
-
 my_class.add_student(s1)
 my_class.add_student(s2)
 my_class.add_student(s3)
+my_class.add_student(s4)
 
-print(f"Average Score: {my_class.get_average()}")
-print(f"The top student is: {my_class.get_top_student()}")
+# 3. Remove anyone with a score below 50
+print("Cleaning up the class...")
+my_class.remove_failing_students(50)
+
+# 4. Print the remaining students
+for s in my_class.students:
+    print(s)
